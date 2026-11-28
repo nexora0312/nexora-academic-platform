@@ -24,8 +24,8 @@ services:
   backend:
     build:
       context: .
+      dockerfile: docker/backend/Dockerfile
       args:
-        APP_NAME: backend
         FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
     restart: unless-stopped
     depends_on:
@@ -55,8 +55,8 @@ services:
   frontend:
     build:
       context: .
+      dockerfile: docker/frontend/Dockerfile
       args:
-        APP_NAME: frontend
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3001/api/v1}
         FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
     restart: unless-stopped

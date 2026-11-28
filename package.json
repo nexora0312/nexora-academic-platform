@@ -19,6 +19,7 @@
     "typecheck": "npm run typecheck --workspace frontend && npm run typecheck --workspace backend",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "check:environment": "npm run check:environment --workspace backend",
     "prisma:validate": "npm run prisma:validate --workspace backend",
     "prisma:generate": "npm run prisma:generate --workspace backend",
     "prisma:seed": "npm run prisma:seed --workspace backend"
@@ -27,7 +28,6 @@
     "@playwright/test": "^1.65.1",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
-    "jsdom": "^25.0.1",
     "vitest": "^2.1.9"
   }
 }

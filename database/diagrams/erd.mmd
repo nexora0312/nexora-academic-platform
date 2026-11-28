@@ -1,0 +1,7 @@
+erDiagram
+  ROLE ||--o{ USER : assigns
+  USER ||--o| STUDENT_PROFILE : has
+  USER ||--o| LECTURER_PROFILE : has
+  USER ||--o{ SESSION : creates
+  USER ||--o{ PASSWORD_RESET_TOKEN : requests
+  DEPARTMENT ||--o{ COURSE : offers

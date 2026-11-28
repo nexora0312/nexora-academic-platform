@@ -1,7 +1,20 @@
-# Frontend Architecture
+# Frontend architecture
 
-The standalone Next.js frontend lives in `frontend/`. Route groups organize public, authentication,
-and role-dashboard pages; feature folders group components, hooks, services, schemas, and types.
-Shared UI belongs in `frontend/src/components`. UI text should use locale keys rather than hardcoded
-strings. Frontend requests use the HTTP client in `frontend/src/services` and the
-`NEXT_PUBLIC_API_URL` environment variable; frontend code must not import Prisma or access MySQL.
+The frontend is an independent Next.js App Router application in `frontend/`. The root page
+demonstrates the User Management reference feature. Authentication and other dashboard areas are
+not implemented.
+
+| Area | Current contents/status |
+|---|---|
+| `frontend/src/app/` | Root page, layout, global styles, favicon |
+| `frontend/src/components/` | Empty placeholder |
+| `frontend/src/features/users/` | User Management reference form, list, schemas, API service, and hook |
+| `frontend/src/hooks/` | Empty placeholder |
+| `frontend/src/services/api-client.ts` | Shared HTTP request helper used by User Management |
+| `frontend/src/lib/` | `cn` class-name helper |
+| `frontend/src/locales/` | English and Sinhala JSON foundations; no runtime i18n integration |
+| `frontend/src/types/` | Empty placeholder |
+
+The browser-facing backend base URL is `NEXT_PUBLIC_API_URL`; it is public configuration, not a
+secret. Frontend source does not import Prisma or database credentials. Other dashboard features,
+client-side authentication, and runtime i18n remain pending.

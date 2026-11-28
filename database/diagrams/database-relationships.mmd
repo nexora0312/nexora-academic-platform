@@ -1,0 +1,7 @@
+flowchart LR
+  Role -->|1:N| User
+  User -->|1:0..1| StudentProfile
+  User -->|1:0..1| LecturerProfile
+  User -->|1:N| Session
+  User -->|1:N| PasswordResetToken
+  Department -->|1:N| Course
