@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String   @unique @db.VarChar(50)
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("roles")
+}
+
+model User {
+  id                   String               @id @default(uuid()) @db.Char(36)
+  email                String               @unique @db.VarChar(255)
+  passwordHash         String               @db.VarChar(255)
+  isActive             Boolean              @default(true)
+  roleId               String               @db.Char(36)
+  role                 Role                 @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  studentProfile       StudentProfile?
+  lecturerProfile      LecturerProfile?
+  sessions             Session[]
+  passwordResetTokens  PasswordResetToken[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([roleId])
+  @@map("users")
+}
+
+model Department {
+  id        String   @id @default(uuid()) @db.Char(36)
+  code      String   @unique @db.VarChar(20)
+  name      String   @db.VarChar(255)
+  courses   Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("departments")
+}
+
+model Course {
+  id           String     @id @default(uuid()) @db.Char(36)
+  code         String     @unique @db.VarChar(20)
+  title        String     @db.VarChar(255)
+  departmentId String     @db.Char(36)
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([departmentId])
+  @@map("courses")
+}
+
+model StudentProfile {
+  id           String   @id @default(uuid()) @db.Char(36)
+  userId       String   @unique @db.Char(36)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  studentCode  String   @unique @db.VarChar(50)
+  displayName  String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("student_profiles")
+}
+
+model LecturerProfile {
+  id           String   @id @default(uuid()) @db.Char(36)
+  userId       String   @unique @db.Char(36)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  employeeCode String   @unique @db.VarChar(50)
+  displayName  String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("lecturer_profiles")
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Char(36)
+  userId    String   @db.Char(36)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid()) @db.Char(36)
+  userId    String    @db.Char(36)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique @db.Char(64)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}

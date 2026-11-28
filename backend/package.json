@@ -1,0 +1,29 @@
+{
+  "name": "@campus360/backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "node -e \"process.env.PORT = process.env.PORT || '3001'; require('./.next/standalone/backend/server.js')\"",
+    "typecheck": "next typegen && tsc --noEmit",
+    "prisma:validate": "prisma validate --schema prisma/schema.prisma",
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "prisma": "^6.19.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  }
+}
